@@ -13,6 +13,9 @@
 <script>
 export default {
   name: 'hello',
+    components: {
+      Error
+    },
   data () {
     return {
 

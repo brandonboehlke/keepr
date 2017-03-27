@@ -11,6 +11,8 @@ let state = {
   user: {},
   myVaults: {},
   myKeeps: {},
+  error: {},
+  isLoading: false,
   //Dummy Data
   keeps: [{
     title: 'Learn to Draw',
@@ -73,6 +75,56 @@ export default {
   state,
   // ACTIONS ARE RESPONSIBLE FOR MANAGING ALL ASYNC REQUESTS
   actions: {
+    login(email, password) {
+      state.isLoading = true
+      api.post('login', {
+        email: email,
+        password: password
+      }).then(res => {
+        state.user = res.data.data
+        state.isLoading = false
+      }).catch(handleError)
+    },
+    register(username, email, password, ) {
+      state.isLoading = true
+      api.post('register', {
+        name: username,
+        email: email,
+        password: password
+      }).then(res => {
+        this.login(email, password)
+      }).catch(handleError)
+    },
+    saveUser(username) {
+      state.isLoading = true
+      let userId = state.user._id
+      let user = state.user
+
+      let updatedUser = {
+        name: username,
+      }
+      console.log(updatedUser)
+
+      api.put('users/' + userId, updatedUser).then(res => {
+
+        state.user = res.data.data
+        console.log("it\'s changed")
+      }).catch(handleError)
+    },
+
+    logout() {
+      api.delete('logout').then(res => {
+        state.user = {}
+      }).catch(handleError)
+    },
+    authenticate() {
+      api('authenticate').then(res => {
+        if (res.data.data) {
+          state.user = res.data.data
+          state.loading = false
+        }
+      }).catch(handleError)
+    }
   }
 
 }

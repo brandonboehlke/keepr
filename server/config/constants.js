@@ -12,11 +12,24 @@ const models = {
     endpoint: 'users',
     preventDefaultApi: true,
     useCustomRoutes: true
+  },
+  vault: {
+    name: 'Vault',
+    endpoint: 'vaults',
+    // preventDefaultApi: true,
+    // useCustomRoutes: true
+  },
+  keep: {
+    name: 'Keep',
+    endpoint: 'keeps',
+    // preventDefaultApi: true,
+    // useCustomRoutes: true
   }
+
 }
 
 
-export  {
+export {
   actions,
   models
 }
