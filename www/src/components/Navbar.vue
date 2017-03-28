@@ -1,6 +1,5 @@
 <template>
 
-
 <nav v-if= "true">
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Keepr</a>
@@ -9,17 +8,19 @@
         <li>loading ... please wait...</li>
       </ul>
       </div>
-      <div v-else-if="user && !user.name">
+      <div v-else-if="!user.name">
        <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><router-link to="login">Login </router-link> </li>
             <li><router-link to="register">Register </router-link> </li>
+            <li><router-link to="keeps"> Browse All Keeps</router-link></li>
             
       </ul>
       </div>
       <div v-else>
        <ul id="nav-mobile" class="right hide-on-med-and-down" >
         <li><router-link to="profile"> Welcome, {{user.name}}!</router-link> </li>
-        <li><router-link to="dashboard"</li>
+        <li><router-link to="dashboard"> Go to Dashboard</router-link> </li>
+        <li><router-link to="keeps"> Browse All Keeps</router-link></li>
         <li><a href='#' @click="logout">Logout</a></li>
       </ul>
       </div>
@@ -32,7 +33,7 @@
 
 <script>
     export default {
-        name: 'main',
+        name: 'navbar',
         mounted() {
             this.$root.$data.store.actions.authenticate()
         },
@@ -44,14 +45,14 @@
                 },
         computed: {
             user() {
-                return this.$root.$data.store.state.activeUser
+                return this.$root.$data.store.state.user
             },
             loading() {
                 return this.$root.$data.store.state.isLoading
             },
             vault() {
                 return this.$root.$data.store.state.myVaults
-            },  
+            }
     }
     }
 </script>

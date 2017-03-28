@@ -3,7 +3,6 @@
         <form @submit.prevent="registerUser" action="#">
             <input type="text" v-model="username" placeholder="Username" required>
             <input type="email" v-model="email" placeholder="Email" required>
-            <input type="number" v-model="age" placeholder="Age" required>
             <input type="password" v-model="password" placeholder="Password" reqiured>
             <button class="waves-effect waves-light btn">Register</button>
 
@@ -14,7 +13,7 @@
 
 <script>
     export default {
-        name: 'Register',
+        name: 'register',
         data() {
             return {
                 username: '',
@@ -49,7 +48,5 @@
         display: inline-block;
         /*flex-direction: row;*/
     }
-    .badgesPic{
-        height: 12vh;
-    }
+   
 </style>

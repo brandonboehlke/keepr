@@ -1,7 +1,7 @@
 <template>
   <div class="login container">
     <form @submit.prevent="loginUser">
-      <input type="email" v-model="username" placeholder="Email" required >
+      <input type="email" v-model="email" placeholder="Email" required >
       <input type="password" v-model="password" placeholder="Password" required>
       <button class="waves-effect waves-light btn">Login</button>
     </form>
@@ -11,16 +11,16 @@
 
 <script>
   export default {
-    name: 'Login',
+    name: 'login',
     data() {
       return {
-        username: '',
+        email: '',
         password: ''
       }
     },
     methods: {
       loginUser() {
-        this.$root.$data.store.actions.login(this.username, this.password)
+        this.$root.$data.store.actions.login(this.email, this.password)
         this.$router.push({path: '/'})
       }
     }
