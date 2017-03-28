@@ -1,3 +1,4 @@
+import {models} from '../config/constants'
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
@@ -11,7 +12,7 @@ let schema = new Schema({
   created: { type: Number, required: true, default: Date.now() },
   //RELATION
   vaults: [{ type: ObjectId, ref: models.vault.name }],
-  keeps: [{ type: ObjectId, ref: models.keep.name }]
+  keeps: [{ type: ObjectId, ref: models.keep.title }]
 
 })
 

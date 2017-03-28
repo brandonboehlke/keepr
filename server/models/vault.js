@@ -7,11 +7,13 @@ let ObjectId = Schema.Types.ObjectId
 let schema = new Schema({
     name: { type: String, required: true, dropDups: true },
     description: { type: String, required: true },
+    imageUrl: { type: String },
     created: { type: Number, required: true, default: Date.now() },
 
     //RELATION
-    creatorId: { type: ObjectId, ref: models.user.name },
-    keeps: [{type: ObjectId, ref: models.keep.name }],
+    userId: { type: ObjectId, ref: models.user.name },
+
+    keeps: [{ type: ObjectId, ref: models.keep.title }]
 })
 
 module.exports = mongoose.model('Vault', schema)
