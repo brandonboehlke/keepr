@@ -11,7 +11,7 @@ let schema = new Schema({
     created: { type: Number, required: true, default: Date.now() },
 
     //RELATION
-    userId: { type: ObjectId, ref: models.user.name },
+    creatorId: { type: ObjectId, ref: models.user.name },
 
     keeps: [{ type: ObjectId, ref: models.keep.title }]
 })

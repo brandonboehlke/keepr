@@ -1,5 +1,6 @@
 let Users = require('../models/user')
-
+let Vaults = require('../models/vault')
+let Keeps = require('../models/keep')
 
 export default {
 
@@ -17,7 +18,7 @@ export default {
         })
     }
   },
-  saveUser: {
+  editUser: {
     path: '/users/:id',
     reqType: 'put',
     method(req, res, next) {
@@ -37,18 +38,32 @@ export default {
       })
     }
   },
-  getVaults: {
-    path: '/users/:id/vaults',
+  getDashboard: {
+    path: '/users/:id/dashboard',
     reqType: 'get',
-    method(req, res, next) {
-      let action = 'Get your vaults'
-      Users.findById(req.params.id).populate("vaults").then(user => {
-        res.send(handleResponse(action, user.vaults))
-      }).catch(error => {
-        return next(handleResponse(action, null, error))
+    method(req, res, next){
+      let action = 'Get your dashboard'
+      Vaults.Find({creatorId: req.params._id}).then( vaults => {
+        Keeps.Find({creatorId: req.params._id}).then(keeps => {
+          res.send(handleResponse(action, {keeps, vaults}))
+        }).catch(error => {
+          return next(handleResponse(action, null, error))
+        })
       })
     }
-  }
+  },
+  // getVaults: {
+  //   path: '/users/:id/vaults',
+  //   reqType: 'get',
+  //   method(req, res, next) {
+  //     let action = 'Get your vaults'
+  //     Users.findById(req.params.id).populate("vaults").then(user => {
+  //       res.send(handleResponse(action, user.vaults))
+  //     }).catch(error => {
+  //       return next(handleResponse(action, null, error))
+  //     })
+  //   }
+  // }
 
 }
 
