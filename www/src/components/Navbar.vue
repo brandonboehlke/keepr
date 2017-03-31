@@ -45,7 +45,7 @@
                 },
         computed: {
             user() {
-                return this.$root.$data.store.state.user
+                return this.$root.$data.store.state.activeUser
             },
             loading() {
                 return this.$root.$data.store.state.isLoading

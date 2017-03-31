@@ -5,9 +5,7 @@
             <input type="email" v-model="email" placeholder="Email" required>
             <input type="password" v-model="password" placeholder="Password" reqiured>
             <button class="waves-effect waves-light btn">Register</button>
-
         </form>
-        <!--<list></list>-->
     </div>
 </template>
 
@@ -28,10 +26,13 @@
                 this.$router.push({
                     path: '/'
                 })
-                // this.username = ''
-                // this.email = ''
-                // this.password = ''
-            },
+        
+            }
+        },
+        computed: {
+            logIn(){
+                return this.$root.$data.store.state.actions.login()
+            }
         }
     }
 

@@ -5,7 +5,7 @@
       <input type="password" v-model="password" placeholder="Password" required>
       <button class="waves-effect waves-light btn">Login</button>
     </form>
-    <!--<list></list>-->
+   
   </div>
 </template>
 
@@ -20,8 +20,13 @@
     },
     methods: {
       loginUser() {
+        if(this.email && this.password){
         this.$root.$data.store.actions.login(this.email, this.password)
+        this.email = ''
+        this.password = ''
         this.$router.push({path: '/'})
+
+        }
       }
     }
   }

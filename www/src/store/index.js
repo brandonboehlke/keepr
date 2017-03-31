@@ -8,10 +8,11 @@ let api = axios.create({
 
 // REGISTER ALL DATA HERE
 let state = {
-  user: {},
-  myVaults: {},
-  myKeeps: {},
-  error: {},
+  activeUser: {},
+  vaults: [],
+  activeVault: {},
+  activeKeep: {},
+  myKeeps: [],
   isLoading: false,
   //Dummy Data
   keeps: [{
@@ -81,7 +82,7 @@ export default {
         email: email,
         password: password
       }).then(res => {
-        state.user = res.data.data
+        state.activeUser = res.data.data
         state.isLoading = false
       }).catch(handleError)
     },
@@ -97,8 +98,8 @@ export default {
     },
     saveUser(username) {
       state.isLoading = true
-      let userId = state.user._id
-      let user = state.user
+      let userId = state.activeUser._id
+      let user = state.activeUser
 
       let updatedUser = {
         name: username,
@@ -107,23 +108,73 @@ export default {
 
       api.put('users/' + userId, updatedUser).then(res => {
 
-        state.user = res.data.data
-        console.log("it\'s changed")
+        state.activeUser = res.data.data
+        console.log("user has updated")
       }).catch(handleError)
     },
 
     logout() {
       api.delete('logout').then(res => {
-        state.user = {}
+        state.activeUser = {}
       }).catch(handleError)
     },
     authenticate() {
       api('authenticate').then(res => {
         if (res.data.data) {
-          state.user = res.data.data
-          state.loading = false
+          state.activeUser = res.data.data
+          state.isLoading = false
         }
       }).catch(handleError)
+    }, 
+    getVault() {
+      api('vaults/' + vault._id).then(res => {
+        state.activeVault = res.data.data
+      }).catch(handleError)
+    },
+    getVaults() {
+      api('vaults/').then(res => {
+        state.vaults = res.data.data
+      }).catch(handleError)
+    },
+    createVault(vault) {
+      api.post('vaults', vault)
+        .then(res => {
+          this.getVaults()
+        }).catch(handleError)
+    },
+    changeVault(id, vault) {
+      api.put('vaults/' + id, vault)
+        .then(res => {
+          this.getVaults()
+        })  
+    },
+    deleteVault(id) {
+      api.delete('vaults/' + id)
+        .then(res => {
+          this.getVaults()
+        })
+    },
+    getKeep() {
+      api('keeps/' + keep._id).then(res => {
+        state.activeKeep = res.data.data
+      }).catch(handleError)
+    },
+    getKeeps() {
+      api('keeps/').then(res => {
+        state.keeps = res.data.data
+      }).catch(handleError)
+    },
+    changeKeep(id, keep) {
+      api.put('keeps/' + id, keep)
+        .then(res => {
+          this.getKeeps()
+        })  
+    },
+    deleteKeep(id) {
+      api.delete('keeps/' + id)
+        .then(res => {
+          this.getKeeps()
+        })
     }
   }
 

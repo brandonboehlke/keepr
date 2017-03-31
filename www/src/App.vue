@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <error></error>
     <navbar></navbar><br><br><br><br>
     <img src="./assets/logo.jpg">
     <router-view></router-view>
@@ -10,7 +11,7 @@
 import Navbar from './components/Navbar'
 export default {
   name: 'app',
-  components: {Navbar}
+  components: {Error, Navbar}
   
 }
 </script>
