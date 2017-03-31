@@ -19,11 +19,11 @@ export default {
                 })
         }
     },
-    addVaultKeep: {
-        path: '/vaults/:id/addKeep',
+    newVaultKeep: {
+        path: '/vaults/:id/newKeep',
         reqType: 'put',
         method(req, res, next) {
-            let action = 'Adds a keep to your vault'
+            let action = 'Adds a new keep to your vault'
             let keep = req.body
             Vaults.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { keeps: req.body } }, { new: true })
                 .then(vault => {

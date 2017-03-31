@@ -69,6 +69,7 @@ let state = {
 
 let handleError = (err) => {
   state.error = err
+  state.isLoading = false
 }
 
 export default {
@@ -96,23 +97,6 @@ export default {
         this.login(email, password)
       }).catch(handleError)
     },
-    saveUser(username) {
-      state.isLoading = true
-      let userId = state.activeUser._id
-      let user = state.activeUser
-
-      let updatedUser = {
-        name: username,
-      }
-      console.log(updatedUser)
-
-      api.put('users/' + userId, updatedUser).then(res => {
-
-        state.activeUser = res.data.data
-        console.log("user has updated")
-      }).catch(handleError)
-    },
-
     logout() {
       api.delete('logout').then(res => {
         state.activeUser = {}
@@ -125,7 +109,7 @@ export default {
           state.isLoading = false
         }
       }).catch(handleError)
-    }, 
+    },
     getVault() {
       api('vaults/' + vault._id).then(res => {
         state.activeVault = res.data.data
@@ -136,8 +120,9 @@ export default {
         state.vaults = res.data.data
       }).catch(handleError)
     },
-    createVault(vault) {
-      api.post('vaults', vault)
+    createVault(name, description, imgUrl) {
+      let vault = { name, description, imgUrl }
+      api.post('/vaults', vault)
         .then(res => {
           this.getVaults()
         }).catch(handleError)
@@ -146,13 +131,20 @@ export default {
       api.put('vaults/' + id, vault)
         .then(res => {
           this.getVaults()
-        })  
+        })
     },
     deleteVault(id) {
       api.delete('vaults/' + id)
         .then(res => {
           this.getVaults()
         })
+    },
+    createKeep(title, author, imageUrl, articleLink, isPublic, tags) {
+      console.log("creating keep")
+      let keep = { title, author, imageUrl, articleLink, isPublic, tags }
+      api.post('/keeps', keep).then(res => {
+        console.log(res.data)
+      }).catch(handleError)
     },
     getKeep() {
       api('keeps/' + keep._id).then(res => {
@@ -168,15 +160,34 @@ export default {
       api.put('keeps/' + id, keep)
         .then(res => {
           this.getKeeps()
-        })  
+        }).catch(handleError)
     },
     deleteKeep(id) {
       api.delete('keeps/' + id)
         .then(res => {
           this.getKeeps()
-        })
+        }).catch(handleError)
+    },
+    getDashboard() {
+      api('dashboard').then(res => {
+        state.myKeeps = res.data.data.keeps
+        state.vaults = res.data.data.vaults
+      }).catch(handleError)
+    },
+    getVaultKeeps(vId) {
+      api('vaults/' + vId + '/keeps').then(res => {
+        console.log(res.data)
+        state.activeVault.keeps = res.data.data
+      }).catch(handleError)
+    },
+    addVaultKeep(keep, vault) {
+      api.put('/vaults/' + vault._id + '/newKeep/', keep._id)
+    },
+    removeVaultKeep(keep, vault) {
+      api.delete('/vaults/' + vault._id + '/removeKeep', keep._id).then(res => {
+        console.log(res.data)
+      })
     }
   }
-
 }
 

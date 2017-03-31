@@ -7,11 +7,11 @@ export default {
     path: '/dashboard',
     reqType: 'get',
     method(req, res, next){
-      let action = 'Get your dashboard'
-      Vaults.Find({creatorId: req.params._id}).then( vaults => {
-        Keeps.Find({creatorId: req.params._id}).then(keeps => {
+      let action = 'Get your dashboard with your vaults and keeps'
+      Vaults.Find({creatorId: req.session.uid}).then( vaults => {
+        Keeps.Find({creatorId: req.session.uid}).then(keeps => {
           res.send(handleResponse(action, {keeps, vaults}))
-        }).catch(error => {
+        }).catch(error => { 
           return next(handleResponse(action, null, error))
         })
       })
