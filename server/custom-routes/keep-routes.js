@@ -1,22 +1,28 @@
 let Keeps = require('../models/keep')
 let Users = require('../models/user')
-let Vaults = require('../models/vault')
 
 export default {
-    createKeep: {
-        path: '/keeps/new',
-        reqType: 'post',
+    getPublicKeeps: {
+        path: '/keeps',
+        reqType: 'get',
         method(req, res, next) {
-            let action = 'creating a new keep'
-            Keeps.create(req.body).then((createdKeep => {
-
-            }))
+            let action = 'Getting all public keeps'
+            Keeps.find({ isPublic: true }).then(keeps => {
+                res.send(handleResponse(action, keeps))
+            }).catch(error => {
+                return next(handleResponse(action, null, error))
+            })
         }
 
-    },
-    addKeepToVault: {
-        path: ''
     }
-
-
+}
+function handleResponse(action, data, error) {
+    var response = {
+        action: action,
+        data: data
+    }
+    if (error) {
+        response.error = error
+    }
+    return response
 }

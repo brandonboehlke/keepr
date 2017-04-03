@@ -103,6 +103,7 @@ export default {
       }).catch(handleError)
     },
     authenticate() {
+      state.isLoading = false
       api('authenticate').then(res => {
         if (res.data.data) {
           state.activeUser = res.data.data
@@ -153,7 +154,9 @@ export default {
     },
     getKeeps() {
       api('keeps/').then(res => {
-        state.keeps = res.data.data
+        state.keeps = keeps
+        return state.keeps
+        //res.data.data 
       }).catch(handleError)
     },
     changeKeep(id, keep) {
@@ -181,7 +184,9 @@ export default {
       }).catch(handleError)
     },
     addVaultKeep(keep, vault) {
-      api.put('/vaults/' + vault._id + '/newKeep/', keep._id)
+      api.put('/vaults/' + vault._id + '/newKeep/', keep._id).then(res => {
+        console.log(res.data)
+      })
     },
     removeVaultKeep(keep, vault) {
       api.delete('/vaults/' + vault._id + '/removeKeep', keep._id).then(res => {

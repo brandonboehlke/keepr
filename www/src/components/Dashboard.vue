@@ -13,7 +13,7 @@
     <form class="card" @submit.prevent="createVault">
       <input type="text" v-model="name" placeholder="Name"></input>
       <input type="text" v-model="description" placeholder="Description"></input>
-      <input type="text" v-model="imageUrl" placeholder="Image"></input>
+      <input type="text" v-model="imageUrl" placeholder="Image Link / URL"></input>
       <button type="submit">Create New Vault</button>
     </form>
 
@@ -25,7 +25,7 @@
     <form class="card" @submit.prevent="createKeep">
       <input type="text" v-model="title" placeholder="Title"></input>
       <input type="text" v-model="body" placeholder="Body"></input>
-      <input type="text" v-model="k_imageUrl" placeholder="Image"></input>
+      <input type="text" v-model="k_imageUrl" placeholder="Image URL"></input>
       <input type="text" v-model="articleLink" placeholder="Article link"></input>
       <input type="checkbox" id="checkbox" v-model="isPublic">
       <label for="checkbox">Make Public</label>
@@ -43,8 +43,9 @@ export default {
   data () {
     return {
         name: '',
+        vaults: [],
         description: '',
-        imgUrl: '',
+        imageUrl: '',
         title: '',
         k_imageUrl: '',
         body: '',

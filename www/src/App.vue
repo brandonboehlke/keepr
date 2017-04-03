@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <error></error>
-    <navbar></navbar><br><br><br><br>
+    <navbar></navbar>
     <img src="./assets/logo.jpg">
     <router-view></router-view>
   </div>

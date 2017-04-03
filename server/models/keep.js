@@ -5,16 +5,17 @@ let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
 
 let schema = new Schema({
-    title: { type: String, required: true},
+    title: { type: String, required: true },
+    author: { type: String },
     imgUrl: { type: String },
-    articleLink: { type: String }, 
-    tags: {type: String},
+    articleLink: { type: String },
+    tags: { type: String },
     isPublic: { type: Boolean, default: true },
     timesVaulted: { type: Number, default: 0 },
     views: { type: Number, default: 0 },
 
     //RELATION
-    creatorId: { type: ObjectId, ref: models.user.name }
+    creatorId: { type: ObjectId, ref: models.user.name, required: true }
 })
 
 

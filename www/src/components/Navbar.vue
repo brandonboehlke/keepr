@@ -1,6 +1,6 @@
 <template>
 
-<nav v-if= "true">
+<nav class = "fixed-nav-bar"v-if= "true">
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Keepr</a>
       <div v-if="loading">
@@ -18,7 +18,7 @@
       </div>
       <div v-else>
        <ul id="nav-mobile" class="right hide-on-med-and-down" >
-        <li><router-link to="profile"> Welcome, {{user.name}}!</router-link> </li>
+        <li> Welcome, <strong>{{user.name}}</strong>!</li>
         <li><router-link to="dashboard"> Go to Dashboard</router-link> </li>
         <li><router-link to="keeps"> Browse All Keeps</router-link></li>
         <li><a href='#' @click="logout">Logout</a></li>
@@ -71,6 +71,17 @@
         position: fixed;
        
     }
+    .nav-wrapper{
+        text-align: left;
+    }
+    .fixed-nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 50px;
+}
     a{
        color: #11abb0
     }

@@ -12,8 +12,8 @@ export default {
             let keep = req.body
             Vaults.findById(req.params.id).populate('keeps').
                 then(vault => {
-                    console.log('Here\'s the vault: ', vault)
-                    res.send(handleResponse(action, vault))
+                    console.log('Here\'s the vault keeps: ', vault.keeps)
+                    res.send(handleResponse(action, vault.keeps))
                 }).catch(error => {
                     return next(handleResponse(action, null, error))
                 })
@@ -53,4 +53,15 @@ export default {
                 })
         }
     }
+}
+
+function handleResponse(action, data, error) {
+    var response = {
+        action: action,
+        data: data
+    }
+    if (error) {
+        response.error = error
+    }
+    return response
 }
